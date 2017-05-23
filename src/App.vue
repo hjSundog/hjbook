@@ -1,13 +1,23 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <router-view></router-view>
+    <router-view name="header"></router-view>
+    <transition name="fade" mode="out-in">
+      <router-view></router-view>
+    </transition>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'app'
+  name: 'app',
+  mounted() {
+    let interval = setInterval(() => {
+      var sid = this.stationid
+      this.$store.commit('PRODUCE_FOOD', this.$store.state.farmers)
+      localStorage.setItem("storedData", JSON.stringify(this.$store.state))
+    }, 100)
+    this.$store.commit('SET_INTERVAL', interval)
+  },
 }
 </script>
 
@@ -18,6 +28,10 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+}
+.divider {
+  width: 80%;
+  margin:0 auto;
+  border-bottom: 1px solid black;
 }
 </style>
