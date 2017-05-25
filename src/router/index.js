@@ -1,5 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import Login from '@/views/Login'
+import Book from '@/views/Book'
+import Books from '@/views/Books'
 import Hello from '@/views/Hello'
 import Header from '@/components/Header'
 import Statistics from '@/components/Statistics'
@@ -10,6 +13,16 @@ import Politics from '@/views/Politics'
 
 Vue.use(Router)
 
+function isLogin(to, from, next){
+
+    if(true){
+        next({
+            path: 'login'
+        });
+    } else {
+        next();
+    }
+}
 export default new Router({
   routes: [
     {
@@ -41,6 +54,17 @@ export default new Router({
           component: Politics
         }
       ]      
+    }, {
+      path: '/login',
+      name: 'login',
+      component: Login,
+      //beforeEnter: isLogin,
+    }, { 
+      path: '/books/:id', 
+      component: Book,
+    }, { 
+      path: '/books', 
+      component: Books,
     }
   ]
 })
