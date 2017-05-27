@@ -3,7 +3,7 @@ import Router from 'vue-router'
 import Login from '@/views/Login'
 import Book from '@/views/Book'
 import Books from '@/views/Books'
-import Hello from '@/views/Hello'
+import Index from '@/views/Index'
 import Header from '@/components/Header'
 import Statistics from '@/components/Statistics'
 import Village from '@/views/Village'
@@ -28,7 +28,7 @@ export default new Router({
     {
       path: '/',
       components: {
-        default: Hello,
+        default: Index,
         header: Header,
         statistics: Statistics,
       }
