@@ -12,6 +12,11 @@ import ComputerScience from '@/views/ComputerScience'
 import Economics from '@/views/Economics'
 import Politics from '@/views/Politics'
 
+// Personal
+import Personal from '@/views/Personal'
+import Profile from '@/views/personal/Profile'
+import Settings from '@/views/personal/Settings'
+
 Vue.use(Router)
 
 function isLogin(to, from, next){
@@ -84,6 +89,24 @@ export default new Router({
           path: 'politics',
           component: Politics
         }
+      ]
+    },{ 
+      path: '/personal',
+      redirect: '/personal/profile',
+      components: {
+        default: Personal,
+        header: Header,
+      },
+      children: [
+        {
+          path: 'profile',
+          name: 'profile',
+          component: Profile
+        },{
+          path: 'settings',
+          name: 'settings',
+          component: Settings
+        },
       ]
     }
   ]
