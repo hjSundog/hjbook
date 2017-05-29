@@ -8,6 +8,7 @@ import Header from '@/components/Header'
 import Statistics from '@/components/Statistics'
 import Village from '@/views/Village'
 import Agriculture from '@/views/Agriculture'
+import ComputerScience from '@/views/ComputerScience'
 import Economics from '@/views/Economics'
 import Politics from '@/views/Politics'
 
@@ -60,11 +61,30 @@ export default new Router({
       component: Login,
       //beforeEnter: isLogin,
     }, { 
-      path: '/books/:id', 
+      path: '/book/:id', 
       component: Book,
     }, { 
       path: '/books', 
-      component: Books,
+      components: {
+        default: Books,
+        header: Header,
+      },
+      children: [
+        {
+          // 当 /user/:id/profile 匹配成功，
+          // UserProfile 会被渲染在 User 的 <router-view> 中
+          path: 'computer-science',
+          component: ComputerScience
+        },
+        {
+          path: 'economics',
+          component: Economics
+        },
+        {
+          path: 'politics',
+          component: Politics
+        }
+      ]
     }
   ]
 })

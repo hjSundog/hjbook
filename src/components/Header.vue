@@ -8,20 +8,22 @@
           </div>
         </el-col>
         <el-col class="hjbook-header-col" :span="12">
-          <router-link :to="{ path: '/village' }" replace><el-menu-item index="1">村庄</el-menu-item></router-link>
+          <router-link :to="{ path: '/village' }" replace><el-menu-item index="1">Personal</el-menu-item></router-link>
           <el-submenu index="2">
-            <template slot="title">Workspace</template>
-            <el-menu-item index="2-1" @click="reset">重置</el-menu-item>
-            <el-menu-item index="2-2">item two</el-menu-item>
-            <el-menu-item index="2-3">item three</el-menu-item>
+            <template slot="title">Books</template>
+            <el-menu-item index="2-1" @click="reset">latest books</el-menu-item>
+            <router-link :to="{ path: '/books' }" replace>
+              <el-menu-item index="2-2">all books</el-menu-item>
+            </router-link>
+            <el-menu-item index="2-3">book discovery</el-menu-item>
           </el-submenu>
-          <el-menu-item index="3"><a href="https://www.ele.me" target="_blank">Orders</a></el-menu-item>
+          <el-menu-item index="3"><a href="https://www.lw-ezio.com" target="_blank">My homepage</a></el-menu-item>
         </el-col>
         <el-col class="hjbook-header-col" :span="4">
           <el-input id="hjbook-header-search"
           placeholder="search the book name" 
           icon="search" 
-          v-model="input2" 
+          v-model="searchContent" 
           :on-icon-click="handleIconClick">
           </el-input>
         </el-col>
@@ -51,7 +53,8 @@
     data() {
       return {
         activeIndex: '1',
-        activeIndex2: '1'
+        activeIndex2: '1',
+        searchContent: '',
       };
     },
     methods: {
@@ -81,13 +84,13 @@
   }
 }
 .hjbook-header-col {
-  line-height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 60px;
 }
 #hjbook-header-search {
   box-sizing: border-box;
-}
-.hjbook-header-profile {
-  height: 60px;
 }
 .hjbook-header-profile-avatar {
   display: flex;
@@ -95,11 +98,15 @@
     height: 36px;
     width: 36px;
     align-self: center;
+    padding: 8px;
     border-radius: 23px;
   }
 
   p {
-    margin: 0;
+    display: inline-block;
   }
+}
+a {
+  text-decoration: none;
 }
 </style>
