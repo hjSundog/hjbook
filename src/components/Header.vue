@@ -35,7 +35,9 @@
             </span>
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item>我的消息</el-dropdown-item>
-              <el-dropdown-item>设置</el-dropdown-item>
+              <el-dropdown-item>
+                <router-link :to="{ path: '/personal' }" replace>设置</router-link>
+              </el-dropdown-item>  
               <el-dropdown-item divided @click.native="logout">退出登录</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
@@ -92,21 +94,24 @@
 #hjbook-header-search {
   box-sizing: border-box;
 }
-.hjbook-header-profile-avatar {
-  display: flex;
-  img {
-    height: 36px;
-    width: 36px;
-    align-self: center;
-    padding: 8px;
-    border-radius: 23px;
-  }
+.hjbook-header-profile {
+  .hjbook-header-profile-avatar {
+    display: flex;
+    img {
+      height: 36px;
+      width: 36px;
+      align-self: center;
+      padding: 8px;
+      border-radius: 23px;
+    }
 
-  p {
-    display: inline-block;
+    p {
+      display: inline-block;
+    }
   }
 }
 a {
+  color: #999;
   text-decoration: none;
 }
 </style>
