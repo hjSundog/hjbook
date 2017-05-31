@@ -19,17 +19,7 @@ import Settings from '@/views/personal/Settings'
 
 Vue.use(Router)
 
-function isLogin(to, from, next){
-
-    if(true){
-        next({
-            path: 'login'
-        });
-    } else {
-        next();
-    }
-}
-export default new Router({
+const router = new Router({
   routes: [
     {
       path: '/',
@@ -111,3 +101,5 @@ export default new Router({
     }
   ]
 })
+
+export default router;
