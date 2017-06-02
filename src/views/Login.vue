@@ -22,6 +22,7 @@
 
 <script>
 import Loading from '../components/Loading.vue'
+import util from '../util'
 export default {
   name: 'Login',
   data(){
@@ -38,6 +39,8 @@ export default {
     //登录逻辑
     login(){
         if(this.account!='' && this.password!=''){
+            util.storeWithExpiration.set('user', {username: this.account, password: this.password}, 600000)
+            this.$store.dispatch("loadUserInfo")
             this.toLogin();
         }
     },

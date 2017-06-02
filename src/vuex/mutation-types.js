@@ -1,3 +1,4 @@
 export const SET_INTERVAL = 'SET_INTERVAL'
 export const PRODUCE_FOOD = 'PRODUCE_FOOD'
 export const PRODUCE_FARMER = 'PRODUCE_FARMER'
+export const SET_USER_INFO = 'SET_USER_INFO'

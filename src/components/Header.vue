@@ -8,7 +8,7 @@
           </div>
         </el-col>
         <el-col class="hjbook-header-col" :span="12">
-          <router-link :to="{ path: '/village' }" replace><el-menu-item index="1">Personal</el-menu-item></router-link>
+          <router-link :to="{ path: '/myrecord' }" replace><el-menu-item index="1">My Record</el-menu-item></router-link>
           <el-submenu index="2">
             <template slot="title">Books</template>
             <el-menu-item index="2-1" @click="reset">latest books</el-menu-item>
@@ -17,7 +17,7 @@
             </router-link>
             <el-menu-item index="2-3">book discovery</el-menu-item>
           </el-submenu>
-          <el-menu-item index="3"><a href="https://www.lw-ezio.com" target="_blank">My homepage</a></el-menu-item>
+          <el-menu-item index="3"><a href="http://www.lwio.me" target="_blank">My homepage</a></el-menu-item>
         </el-col>
         <el-col class="hjbook-header-col" :span="4">
           <el-input id="hjbook-header-search"
@@ -31,7 +31,7 @@
           <el-dropdown class="hjbook-header-profile" trigger="hover">
             <span class="el-dropdown-link hjbook-header-profile-avatar">
               <img src="http://img1.imgtn.bdimg.com/it/u=4042190513,2070669060&fm=23&gp=0.jpg" /> 
-              <p>Liangwang</p>
+              <p>{{user.userInfo.username}}</p>
             </span>
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item>我的消息</el-dropdown-item>
@@ -50,26 +50,33 @@
 </template>
 
 <script>
-  export default {
-    name: 'header',
-    data() {
-      return {
-        activeIndex: '1',
-        activeIndex2: '1',
-        searchContent: '',
-      };
+import { mapState, mapActions } from 'vuex';
+
+export default {
+  name: 'header',
+  data() {
+    return {
+      activeIndex: '1',
+      activeIndex2: '1',
+      searchContent: '',
+    };
+  },
+  computed: {
+    ...mapState([
+      'user'
+    ]),
+  },
+  methods: {
+    handleSelect(key, keyPath) {
+      console.log(key, keyPath);
     },
-    methods: {
-      handleSelect(key, keyPath) {
-        console.log(key, keyPath);
-      },
-      reset() {
-        clearInterval(this.$store.state.interval)
-        localStorage.removeItem('storedData')
-        this.$router.go(0)
-      }
+    reset() {
+      clearInterval(this.$store.state.interval)
+      localStorage.removeItem('storedData')
+      this.$router.go(0)
     }
   }
+}
 </script>
 
 <style style lang="scss" scoped>
@@ -113,5 +120,6 @@
 a {
   color: #999;
   text-decoration: none;
+  display: flex;
 }
 </style>

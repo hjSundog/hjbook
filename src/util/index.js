@@ -1,5 +1,4 @@
 import store from 'store'
-import swal from 'sweetalert'
 
 // get brower info 
 

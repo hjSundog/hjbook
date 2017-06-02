@@ -16,6 +16,10 @@ import Politics from '@/views/Politics'
 import Personal from '@/views/Personal'
 import Profile from '@/views/personal/Profile'
 import Settings from '@/views/personal/Settings'
+// My record
+import Myrecord from '@/views/Myrecord'
+import Current from '@/views/myrecord/Current'
+import History from '@/views/myrecord/History'
 
 Vue.use(Router)
 
@@ -96,6 +100,24 @@ const router = new Router({
           path: 'settings',
           name: 'settings',
           component: Settings
+        },
+      ]
+    },{ 
+      path: '/myrecord',
+      redirect: '/myrecord/current',
+      components: {
+        default: Myrecord,
+        header: Header,
+      },
+      children: [
+        {
+          path: 'current',
+          name: 'current',
+          component: Current
+        },{
+          path: 'history',
+          name: 'history',
+          component: History
         },
       ]
     }
