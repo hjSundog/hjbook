@@ -30,7 +30,7 @@
           </el-input>
         </el-col>
         <el-col class="hjbook-header-col" :span="4">
-          <el-dropdown v-if="user.userInfo.username" class="hjbook-header-profile" trigger="hover">
+          <el-dropdown v-if="user.userInfo.user_id" class="hjbook-header-profile" trigger="hover">
             <span class="el-dropdown-link hjbook-header-profile-avatar">
               <img src="http://img1.imgtn.bdimg.com/it/u=4042190513,2070669060&fm=23&gp=0.jpg" /> 
               <p>{{user.userInfo.username}}</p>
@@ -83,6 +83,9 @@ export default {
         util.storeWithExpiration.set('user', {username: null})
         this.$store.dispatch("loadUserInfo")
     }
+  },
+  mounted() {
+      this.$store.dispatch("loadUserInfo")
   }
 }
 </script>

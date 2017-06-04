@@ -26,7 +26,7 @@ axios.interceptors.request.use((config) => {
 
 axios.interceptors.response.use((res) => {
     if(res.status === 204) {
-        return true
+        return res.data;
     }
     if(res.status !== 200 && res.status !== 201){
         return Promise.reject(res);
@@ -42,16 +42,15 @@ export function fetch(url, params, method, headers, customConfigs = {}){
     if(method === 'get'){
         url = url + '?' + qs.stringify(params);
     }
-    let organizer = util.storeWithExpiration.get('organizer');
-    let customer = util.storeWithExpiration.get('customer');
+    let user = util.storeWithExpiration.get('user');
     let auth_header = {};
 
     // add authentication
-    if(organizer && organizer.id){
-        const { access_token, id } = organizer;
+    if(user && user.id){
+        const { token, id } = user;
         const client = util.getBrowserInfo();
         auth_header = {
-            'access-token': access_token || '',
+            'access-token': token || '',
             'uid': id || '',
             'client': client || '',
         }
@@ -97,7 +96,7 @@ export function fetch(url, params, method, headers, customConfigs = {}){
 
 export default {
     Login(params){
-        return fetch('/organizers/signin', params, 'post');
+        return fetch('/users/signin', params, 'post');
     },
     Signup(params){
         return fetch('/users', params, 'post');
