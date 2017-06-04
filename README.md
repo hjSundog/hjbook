@@ -1,6 +1,6 @@
 # hjbook
 
-> A Vue.js project
+> A Vue.js project for practise
 
 ## Build Setup
 
