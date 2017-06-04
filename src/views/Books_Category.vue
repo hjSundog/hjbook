@@ -54,6 +54,14 @@
                 title: "Computer Science",
                 currentPage1: 5,
             };
+        },
+        mounted() {
+            console.log(`this is in ${this.$route.params.category}`)
+        },
+        watch: {
+            $route(curVal, oldVal) {
+                console.log(`this is in ${this.$route.params.category}`);
+            }
         }
     }
 </script>

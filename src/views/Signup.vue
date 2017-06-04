@@ -59,7 +59,7 @@ export default {
         }
         */
       //设置在登录状态
-        api.Login({
+        api.Signup({
             user_email: this.account,
             password: this.password,
         })

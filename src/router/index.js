@@ -1,16 +1,13 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Login from '@/views/Login'
+import Signup from '@/views/Signup'
 import Book from '@/views/Book'
 import Books from '@/views/Books'
 import Index from '@/views/Index'
 import Header from '@/components/Header'
 import Statistics from '@/components/Statistics'
-import Village from '@/views/Village'
-import Agriculture from '@/views/Agriculture'
-import ComputerScience from '@/views/ComputerScience'
-import Economics from '@/views/Economics'
-import Politics from '@/views/Politics'
+import Books_Category from '@/views/Books_Category'
 
 // Personal
 import Personal from '@/views/Personal'
@@ -33,31 +30,14 @@ const router = new Router({
         statistics: Statistics,
       }
     }, {
-      path: '/village',
-      components: {
-        default: Village,
-        header: Header,
-      },
-      children: [
-        {
-          // 当 /user/:id/profile 匹配成功，
-          // UserProfile 会被渲染在 User 的 <router-view> 中
-          path: 'agriculture',
-          component: Agriculture
-        },
-        {
-          path: 'economics',
-          component: Economics
-        },
-        {
-          path: 'politics',
-          component: Politics
-        }
-      ]      
-    }, {
       path: '/login',
       name: 'login',
       component: Login,
+      //beforeEnter: isLogin,
+    }, {
+      path: '/signup',
+      name: 'signup',
+      component: Signup,
       //beforeEnter: isLogin,
     }, { 
       path: '/book/:id', 
@@ -72,17 +52,9 @@ const router = new Router({
         {
           // 当 /user/:id/profile 匹配成功，
           // UserProfile 会被渲染在 User 的 <router-view> 中
-          path: 'computer-science',
-          component: ComputerScience
+          path: ':category',
+          component: Books_Category
         },
-        {
-          path: 'economics',
-          component: Economics
-        },
-        {
-          path: 'politics',
-          component: Politics
-        }
       ]
     },{ 
       path: '/personal',

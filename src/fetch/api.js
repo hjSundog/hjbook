@@ -1,12 +1,13 @@
 import axios from 'axios'
 import qs from 'qs'
-import util from 'util'
+import util from '../util'
 
-let Interface = '/api/v1'
-
+let Interface = 'http://lw-ezio.com/hjbook_api'
+/*
 if(!DEVELOPMENT){
-    Interface = 'http://bescene.staging.fooyo.sg/api/v1'
+    Interface = 'http://lw-ezio.com/hjbook_api'
 }
+*/
 // axios config that will be applied to every request
 axios.defaults.baseURL = Interface // interface address
 axios.defaults.timeout = 20000;
@@ -48,14 +49,6 @@ export function fetch(url, params, method, headers, customConfigs = {}){
     // add authentication
     if(organizer && organizer.id){
         const { access_token, id } = organizer;
-        const client = util.getBrowserInfo();
-        auth_header = {
-            'access-token': access_token || '',
-            'uid': id || '',
-            'client': client || '',
-        }
-    } else if (customer && customer.id) {
-        const { access_token, id } = customer;
         const client = util.getBrowserInfo();
         auth_header = {
             'access-token': access_token || '',
@@ -105,6 +98,9 @@ export function fetch(url, params, method, headers, customConfigs = {}){
 export default {
     Login(params){
         return fetch('/organizers/signin', params, 'post');
+    },
+    Signup(params){
+        return fetch('/users', params, 'post');
     },
 }
 
