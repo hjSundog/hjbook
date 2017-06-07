@@ -1,4 +1,3 @@
-
 <template>
 <div class="login" id="login">
     <a href="javascript:;" class="log-close"><i class="icons close"></i></a>
@@ -8,7 +7,7 @@
         <div class="log-cloud cloud3"></div>
         <div class="log-cloud cloud4"></div>
 
-        <div class="log-logo">Welcome!</div>
+        <div class="log-logo"><router-link :to="{ path: '/' }" replace>Welcome!</router-link></div>
         <div class="log-text">@HJsundog</div>
     </div>
     <div class="log-email">

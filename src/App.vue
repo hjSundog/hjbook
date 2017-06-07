@@ -83,4 +83,8 @@ export default {
     cursor: pointer;
     opacity: .4;
 }
+a {
+  color: inherit;
+  text-decoration: none;
+}
 </style>

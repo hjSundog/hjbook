@@ -3,6 +3,9 @@ var utils = require('./utils')
 var config = require('../config')
 var vueLoaderConfig = require('./vue-loader.conf')
 
+const ROOT_PATH = path.resolve(__dirname, '../');
+const APP_PATH = path.join(ROOT_PATH, 'src');
+
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
 }
@@ -22,6 +25,8 @@ module.exports = {
     extensions: ['.js', '.vue', '.json'],
     alias: {
       'vue$': 'vue/dist/vue.esm.js',
+      'api$': path.resolve(APP_PATH, 'fetch/api.js'),
+      'util$': path.resolve(APP_PATH,'util/index.js'),
       '@': resolve('src')
     }
   },
