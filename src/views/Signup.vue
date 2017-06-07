@@ -13,7 +13,11 @@
     </div>
     <div class="log-email">
         <input type="text" placeholder="Email" :class="'log-input' + (account==''?' log-input-empty':'')" v-model="account">
-        <input type="password" placeholder="Password" :class="'log-input' + (password==''?' log-input-empty':'')"  v-model="password">
+        <input type="password" 
+          placeholder="Password" 
+          :class="'log-input' + (password==''?' log-input-empty':'')" 
+          @keyup.enter="signup()"
+          v-model="password">
         <button class="log-btn" @click="signup">Signup</button>
     </div>
     <Loading v-if="isLoading" marginTop="-30%"></Loading>
@@ -57,7 +61,7 @@ export default {
             self.$route.push({path: '/'})
         }).catch(function(error) {
             self.isLoading = false;
-            console.log(error);
+            self.$message(error.data.error);
         })
     }
   }
@@ -214,6 +218,8 @@ export default {
 }
 
 .log-email {
+    display: flex;
+    flex-direction: column;
     text-align: center;
     margin-top: 20px;
 }

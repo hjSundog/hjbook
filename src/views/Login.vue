@@ -12,8 +12,12 @@
     </div>
     <div class="log-email">
         <input type="text" placeholder="Email" :class="'log-input' + (account==''?' log-input-empty':'')" v-model="account">
-        <input type="password" placeholder="Password" :class="'log-input' + (password==''?' log-input-empty':'')"  v-model="password">
-        <button class="log-btn" @click="login">Login</button>
+        <input type="password" 
+          placeholder="Password" 
+          :class="'log-input' + (password==''?' log-input-empty':'')" 
+          @keyup.enter="login()"  
+          v-model="password">
+        <button class="log-btn" @keyup.enter="login" @click="login">Login</button>
     </div>
     <Loading v-if="isLoading" marginTop="-30%"></Loading>
 </div>
@@ -39,7 +43,7 @@ export default {
     //登录逻辑
     login(){
         if(this.account!='' && this.password!=''){
-            this.toLogin();
+            this.toLogin()
         }
     },
     //登录请求
@@ -56,7 +60,7 @@ export default {
             self.$router.push({path: '/'})
         }).catch(function(error) {
             self.isLoading = false;
-            console.log(error);
+            self.$message(error.data.error);
         })
     }
   }
@@ -213,6 +217,8 @@ export default {
 }
 
 .log-email {
+    display: flex;
+    flex-direction: column;
     text-align: center;
     margin-top: 20px;
 }
