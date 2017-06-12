@@ -118,7 +118,7 @@ const router = new Router({
 router.beforeEach((to, from, next) => {
     console.log(to.meta.requireAuth)
     if (to.meta.requireAuth) {  // 判断该路由是否需要登录权限
-        if (store.state.user.userInfo.id) {  // 通过vuex state获取当前的token是否存在
+        if (store.state.user.userInfo.user_id) {  // 通过vuex state获取当前的token是否存在
             next();
         }
         else {

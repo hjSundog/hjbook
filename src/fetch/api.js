@@ -50,7 +50,7 @@ export function fetch(url, params, method, headers, customConfigs = {}){
         const { token, id } = user;
         const client = util.getBrowserInfo();
         auth_header = {
-            'access-token': token || '',
+            'Access-Token': token || '',
             'uid': id || '',
             'client': client || '',
         }
@@ -100,6 +100,12 @@ export default {
     },
     Signup(params){
         return fetch('/users', params, 'post');
+    },
+    getRecords(params) {
+
+    },
+    getBooks(params) {
+        return fetch('/books', params)
     },
 }
 
