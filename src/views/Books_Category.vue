@@ -1,31 +1,15 @@
 <template>
-    <div class="section ">
+    <div class="section">
         <div class="section-title">
-            <h1>{{ title }}</h1>
+            <h1>{{ $route.params.category }}</h1>
         </div>
         <div class="section-content">
-            <div id="book-123" class="book-entry">
-                <img class="book-entry-thumbnail" src="https://img1.doubanio.com/spic/s29372139.jpg">
+            <div v-for="book of booksList" :data-bookid="'book-'+book.book_id" class="book-entry">
+                <img class="book-entry-thumbnail" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1497456024110&di=b871a3930ba8b8ec6296fb2adf780c15&imgtype=0&src=http%3A%2F%2Fwww.jillcon.cn%2FUploadFiles%2FOthers%2F201408181306141562753.jpg">
                 <div class="book-entry-intro">
-                    <h1>play snake</h1>
+                    <h1>{{book.book_name}}</h1>
                     <h2>Yuyi Liang / 2017-5-29 / adoubi </h2>
-                    <p>A book which can teach you how to play snake.</p>
-                </div>
-            </div>
-            <div id="book-124" class="book-entry">
-                <img class="book-entry-thumbnail" src="https://img1.doubanio.com/spic/s29372139.jpg">
-                <div class="book-entry-intro">
-                    <h1>play snake</h1>
-                    <h2>Yuyi Liang / 2017-5-29 / adoubi </h2>
-                    <p>A book which can teach you how to play snake.</p>
-                </div>
-            </div>
-            <div id="book-125" class="book-entry">
-                <img class="book-entry-thumbnail" src="https://img1.doubanio.com/spic/s29372139.jpg">
-                <div class="book-entry-intro">
-                    <h1>play snake</h1>
-                    <h2>Yuyi Liang / 2017-5-29 / adoubi </h2>
-                    <p>A book which can teach you how to play snake.</p>
+                    <p>{{book.book_detail}}</p>
                 </div>
             </div>
         </div>
@@ -35,35 +19,57 @@
             :current-page.sync="currentPage1"
             :page-size="100"
             layout="total, prev, pager, next"
-            :total="1000">
+            :total="1">
         </el-pagination>
     </div>
 </template>
 <script>
-    export default {
-        methods: {
-            handleSizeChange(val) {
-                console.log(`每页 ${val} 条`);
-            },
-            handleCurrentChange(val) {
-                console.log(`当前页: ${val}`);
-            }
+import api from 'api'
+export default {
+    methods: {
+        handleSizeChange(val) {
+            console.log(`每页 ${val} 条`);
         },
-        data() {
-            return {
-                title: "Computer Science",
-                currentPage1: 5,
-            };
-        },
-        mounted() {
-            console.log(`this is in ${this.$route.params.category}`)
-        },
-        watch: {
-            $route(curVal, oldVal) {
-                console.log(`this is in ${this.$route.params.category}`);
-            }
+        handleCurrentChange(val) {
+            console.log(`当前页: ${val}`);
+        }
+    },
+    data() {
+        return {
+            title: "Computer Science",
+            booksList: [],
+            currentPage1: 5,
+        };
+    },
+    mounted() {
+        let self = this;
+        console.log(`this is in ${this.$route.params.category}`)
+        api.getBooks_category(
+            {}, 
+            this.$route.params.category.toString(), 
+        ).then(function(response) {
+            console.dir(response)
+            self.booksList = response
+        }).catch(function(error) {
+            self.$message('get List error')
+        })
+    },
+    watch: {
+        $route(curVal, oldVal) {
+            let self = this;
+            console.log(`this is in ${this.$route.params.category}`);
+            api.getBooks_category(
+                {}, 
+                this.$route.params.category, 
+            ).then(function(response) {
+                console.dir(response)
+                self.booksList = response
+            }).catch(function(error) {
+                self.$message('get List error')
+            })
         }
     }
+}
 </script>
 
 <style lang="scss" scoped>
@@ -103,6 +109,7 @@
         }
         p {
             flex: 1;
+            text-align: left;
         }
     }
 }

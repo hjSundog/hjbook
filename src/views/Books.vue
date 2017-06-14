@@ -3,17 +3,9 @@
     <el-row id="books">
       <div class="books-sidebar">
         <el-menu class="books-categories" @open="handleOpen" @close="handleClose" :router="true">
-          <el-menu-item class="category" index="/books/computer-science">
+          <el-menu-item v-for="category of categoryList" class="category" :index="'/books/' + category.category_name">
             <i class="el-icon-setting"></i>
-            <p>Computer Science</p>
-          </el-menu-item>
-          <el-menu-item class="category" index="/books/economics">
-            <i class="el-icon-menu"></i>
-            <p>Economics</p>
-          </el-menu-item>
-          <el-menu-item class="category" index="/books/politics">
-            <i class="el-icon-menu"></i>
-            <p>Politics</p>
+            <p>{{category.category_name}}</p>
           </el-menu-item>
         </el-menu>
       </div>
@@ -26,22 +18,33 @@
 </template>
 
 <script>
-  export default {
-    name: 'village',
-    data() {
-      return {
-
-      };
+import api from 'api'
+export default {
+  name: 'village',
+  data() {
+    return {
+      categoryList: []
+    };
+  },
+  methods: {
+    handleOpen(key, keyPath) {
+      console.log(key, keyPath);
     },
-    methods: {
-      handleOpen(key, keyPath) {
-        console.log(key, keyPath);
-      },
-      handleClose(key, keyPath) {
-        console.log(key, keyPath);
-      }
+    handleClose(key, keyPath) {
+      console.log(key, keyPath);
     }
+  },
+  mounted() {
+    let self = this
+    api.getCategoryList({
+    }).then(function(response) {
+        console.dir(response)
+        self.categoryList = response
+    }).catch(function(error) {
+        self.$message('get List error')
+    })
   }
+}
 </script>
 
 
@@ -65,5 +68,6 @@
     width: 180px;
 }
 .books-content {
+    flex: 1;
 }
 </style>

@@ -42,7 +42,10 @@ const router = new Router({
       //beforeEnter: isLogin,
     }, { 
       path: '/book/:id', 
-      component: Book,
+      components: {
+        default: Book,
+        header: Header,
+      },
     }, { 
       path: '/books', 
       components: {

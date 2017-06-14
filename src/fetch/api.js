@@ -12,7 +12,7 @@ if(!DEVELOPMENT){
 axios.defaults.baseURL = Interface // interface address
 axios.defaults.timeout = 20000;
 axios.defaults.headers.post['Content-Type'] = 'application/json;charset=UTF-8';
-
+axios.defaults.headers.get['Content-Type'] = 'application/json;charset=UTF-8';
 // stringify post array
 axios.interceptors.request.use((config) => {
     if(config.method === 'post'){
@@ -107,6 +107,12 @@ export default {
     getBooks(params) {
         return fetch('/books', params)
     },
+    getCategoryList(params) {
+        return fetch('/categories', params)
+    },
+    getBooks_category(params, category) {
+        return fetch(`/categories/${category}`, params)
+    }
 }
 
 
