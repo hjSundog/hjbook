@@ -55,7 +55,7 @@ export default {
             password: this.password,
         }).then(function(response) {
             self.isLoading = false;
-            util.storeWithExpiration.set('user', response, 600000)
+            util.storeWithExpiration.set('user', response, 6000000)
             self.$store.dispatch("loadUserInfo")
             self.$router.push({path: '/'})
         }).catch(function(error) {

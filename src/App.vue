@@ -8,53 +8,97 @@
       <i class="el-icon-caret-top"></i>
     </div>
     <el-dialog title="return books" :visible.sync="dialogTableVisible">
-        <el-table :data="gridData">
-            <el-table-column property="date" label="日期" width="150"></el-table-column>
-            <el-table-column property="bookname" label="book name" width="200"></el-table-column>
-            <el-table-column property="address" label="地址"></el-table-column>
+        <el-table :data="borrowedBooks">
+            <el-table-column property="book_id" label="id" width="150"></el-table-column>
+            <el-table-column property="book_name" label="book name"></el-table-column>
+            <el-table-column
+              fixed="right"
+              label="操作"
+              width="100">
+              <template scope="scope">
+                <el-button @click.native.prevent="handleReturn(scope.$index, borrowedBooks)" type="text" size="small">return book</el-button>
+              </template>
+            </el-table-column>
         </el-table>
         <h1>borrow books</h1>
-        <el-table :data="gridData">
-            <el-table-column property="date" label="日期" width="150"></el-table-column>
-            <el-table-column property="bookname" label="book name" width="200"></el-table-column>
-            <el-table-column property="address" label="地址"></el-table-column>
+        <el-table :data="allBooks">
+            <el-table-column property="book_id" label="id" width="150"></el-table-column>
+            <el-table-column property="book_name" label="book name"></el-table-column>
+            <el-table-column
+              fixed="right"
+              label="操作"
+              width="100">
+              <template scope="scope">
+                <el-button v-if="allBooks[scope.$index].borrowed == '0'" @click.native.prevent="handleClick(scope.$index, allBooks)" type="text" size="small">borrow</el-button>
+              </template>
+            </el-table-column>
         </el-table>
     </el-dialog>
   </div>
 </template>
 
 <script>
+import api from 'api'
+import {mapGetters} from 'vuex'
 export default {
   name: 'app',
   data() {
     return {
       dialogTableVisible: false,
-      gridData: [{
-        date: '2016-05-02',
-        bookname: '王小虎',
-        address: '上海市普陀区金沙江路 1518 弄'
-      }, {
-        date: '2016-05-04',
-        bookname: '王小虎',
-        address: '上海市普陀区金沙江路 1518 弄'
-      }, {
-        date: '2016-05-01',
-        bookname: '王小虎',
-        address: '上海市普陀区金沙江路 1518 弄'
-      }, {
-        date: '2016-05-03',
-        bookname: '王小虎',
-        address: '上海市普陀区金沙江路 1518 弄'
-      }],
+      borrowedBooks: [],
+      allBooks: [],
     }
+  },
+  computed: {
+      ...mapGetters([
+          'getUserInfo',
+      ])
   },
   methods: {
     change() {
       this.dialogTableVisible = true
       console.log("fuck")
+    },
+    handleClick(index, rows) {
+      let self = this;
+      console.dir(rows[index])
+      api.borrowBook(
+        rows[index].book_id 
+      ).then(function(response) {
+        self.$message('borrow success')
+      }).catch(function(error) {
+        self.$message(error.data)
+      })
+    },
+    handleReturn(index, rows) {
+      let self = this;
+      console.dir(rows[index])
+      api.returnBook(
+        rows[index].book_id 
+      ).then(function(response) {
+        self.$message('return success')
+      }).catch(function(error) {
+        self.$message(error.data)
+      })
     }
   },
-  mounted() {
+  created() {
+    let self = this;
+    api.getBooks(
+      {}, 
+    ).then(function(response) {
+      self.allBooks = response
+      console.log(self.allBooks)
+    }).catch(function(error) {
+      self.$message('get List error')
+    })
+    api.getCurrentBorrowedByUser( 
+        self.getUserInfo.user_id, 
+    ).then(function(response) {
+        self.borrowedBooks = response
+    }).catch(function(error) {
+        self.$message(error.data)
+    })   
   },
 }
 </script>

@@ -46,12 +46,12 @@ export function fetch(url, params, method, headers, customConfigs = {}){
     let auth_header = {};
 
     // add authentication
-    if(user && user.id){
-        const { token, id } = user;
+    console.dir(user)
+    if(user && user.user_id){
         const client = util.getBrowserInfo();
         auth_header = {
-            'Access-Token': token || '',
-            'uid': id || '',
+            'Access-Token': user.token || '',
+            'uid': user.user_id || '',
             'client': client || '',
         }
     }
@@ -104,6 +104,9 @@ export default {
     getRecords(params) {
 
     },
+    getBook(id) {
+        return fetch(`/books/${id}`)
+    },
     getBooks(params) {
         return fetch('/books', params)
     },
@@ -112,6 +115,15 @@ export default {
     },
     getBooks_category(params, category) {
         return fetch(`/categories/${category}`, params)
+    },
+    getCurrentBorrowedByUser(userid) {
+        return fetch(`/users/${userid}/books`);
+    },
+    borrowBook(bookid) {
+        return fetch(`/books/${bookid}/borrow`, {}, 'post');
+    },
+    returnBook(bookid) {
+        return fetch(`/books/${bookid}/return`, {}, 'post');
     }
 }
 

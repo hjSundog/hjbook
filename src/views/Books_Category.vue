@@ -7,7 +7,7 @@
             <div v-for="book of booksList" :data-bookid="'book-'+book.book_id" class="book-entry">
                 <img class="book-entry-thumbnail" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1497456024110&di=b871a3930ba8b8ec6296fb2adf780c15&imgtype=0&src=http%3A%2F%2Fwww.jillcon.cn%2FUploadFiles%2FOthers%2F201408181306141562753.jpg">
                 <div class="book-entry-intro">
-                    <h1>{{book.book_name}}</h1>
+                    <h1><router-link :to = "'/book/'+book.book_id">{{book.book_name}}</router-link></h1>
                     <h2>Yuyi Liang / 2017-5-29 / adoubi </h2>
                     <p>{{book.book_detail}}</p>
                 </div>

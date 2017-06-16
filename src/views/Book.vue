@@ -3,7 +3,7 @@
         <div class="center-container">
             <div class="book-details-container">
                 <div class="book-details-header">
-                    <h1>{ play snake }</h1>
+                    <h1>{{book.book_name}} <el-tag v-if="book.borrowed == '1'">borrowed</el-tag><el-tag v-else type="success">available</el-tag></h1>
                     <div class="book-details-profile">
                         <div class="book-details-profile-img">
                             <img src="https://img1.doubanio.com/spic/s29372139.jpg">
@@ -20,18 +20,33 @@
                         </div>
                     </div>
                 </div>
+                <div class="book-details-brief">
+                    <h2>Content Summary</h2>
+                    <p>{{ book.book_detail }}</p>
+                </div>
             </div>
         </div>
     </div>
 </template>
 
 <script>
+import api from 'api'
 export default {
     name: 'book-details',
     data () {
         return {
-      
+            book: {}
         }
+    },
+    mounted() {
+        let self = this;
+        api.getBook( 
+            this.$route.params.id, 
+        ).then(function(response) {
+            self.book = response[0]
+        }).catch(function(error) {
+            self.$message('get List error')
+        })        
     }
 }
 </script>
@@ -68,6 +83,15 @@ export default {
                 }
             }
         }
+    }
+}
+.book-details-brief {
+    h2 {
+        color: #007722;
+        text-align: left;
+    }
+    p {
+        text-align: left;
     }
 }
 </style>
